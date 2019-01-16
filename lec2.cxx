@@ -10,7 +10,7 @@ int main()
     transform(s.begin(), 
         s.end(), 
         s.begin(),
-        [](unsigned char c) -> unsigned char { return toupper(c); }
+        [](unsigned char c) { return toupper(c); }
     );
 
     // std::transform(
@@ -20,5 +20,5 @@ int main()
     //     [](int i) -> int { return i * 2; }
     // );
 
-    cout << '\n';
+    cout << s << '\n';
 }
