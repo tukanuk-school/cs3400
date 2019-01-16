@@ -6,12 +6,19 @@ using namespace std;
 
 int main()
 {
-    transform(
-        istream_iterator<int>(cin),
-        istream_iterator<int>(),
-        ostream_iterator<int>(cout, " "),
-        [](int i) { return i * 2; }
+    string s("hello");
+    transform(s.begin(), 
+        s.end(), 
+        s.begin(),
+        [](unsigned char c) -> unsigned char { return toupper(c); }
     );
 
+    // std::transform(
+    //     istream_iterator<int>(cin),
+    //     istream_iterator<int>(),
+    //     ostream_iterator<int>(cout, " "),
+    //     [](int i) -> int { return i * 2; }
+    // );
+
     cout << '\n';
-} //p5?
+}
