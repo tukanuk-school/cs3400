@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    // string str;
+    string str;
     // string::iterator it;
 
     size_t startQuote = string::npos;
