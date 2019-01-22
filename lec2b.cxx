@@ -4,6 +4,8 @@
 
 using namespace std;
 
+int test(istream_iterator c);
+
 int main()
 {
     // string s("hello");
@@ -14,12 +16,16 @@ int main()
     // );
 
     std::transform(
-        istream_iterator<int>(cin),
-        istream_iterator<int>(),
-        ostream_iterator<int>(cout, " "),
-        [](int i) -> int { return i * 2; }
+        istream_iterator<char>(cin),
+        istream_iterator<char>(),
+        ostream_iterator<char>(cout, " "),
+        test(cin)
     );
 
     // cout << s << '\n';
     cout << '\n';
+}
+
+int test( char c) {
+    cout << c;
 }
