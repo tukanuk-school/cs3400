@@ -3,6 +3,7 @@
 #include <string>
 #include <cstring>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -17,7 +18,10 @@ istream& operator >>(istream& is, employee& e)
 {
   // write code to read in an employee, i.e.,
   //   e.id followed by e.name followed by e.salary.
-  #error write code here
+  //#error write code here
+  
+  is >> e.id >> e.name >> e.salary;
+
   return is;
 }
 
@@ -27,7 +31,10 @@ ostream& operator <<(ostream& os, employee const& e)
   //   e.id followed by a ' ', followed by 
   //   e.name followed by a ' ', followed by
   //   e.salary.
-  #error write code here
+  //#error write code here
+
+  os << e.id << ' ' << e.name << ' ' << e.salary;
+
   return os;
 }
 
@@ -40,7 +47,9 @@ ostream& operator <<(ostream& os, vector<employee> const& v)
   //  followed by e.name, followed by ',',
   //  followed by e.salary, followed by ')'.
   // with no space(s) before or after such.
-  #error write code here
+  //#error write code here
+  for (auto const& e : v )
+    os << '(' << e.id << ',' << e.name << ',' << e.salary << ')';
   return os;
 }
 
@@ -56,6 +65,8 @@ int main()
   //       employees.push_back( /* employee record variable */) to
   //     to add each employee record.
   // APPROX # of lines of code: 3 (with "while" loop); 2 (with "for" loop)
+  for (employee e; cin >> e; )
+    employees.push_back(e);
 
   // abort if we did not reach the end-of-file, i.e., an error occurred...
   if (!cin.eof())
@@ -77,7 +88,10 @@ int main()
     //   HINT 3: Pass the employees variable to the copy constructor.
     //   HINT 4: This is a single-line of code, i.e., a variable declaration
     //           invoking the copy constructor.
-    #error write code here
+    //#error write code here
+    vector<employee> employees_copy = employees;
+
+    // cout << "     RAW_DATA: " << employees_copy << endl;
 
     // In <algorithm>, there is stable_sort(), i.e.,
     //   see Josuttis text, Section 11.9 Sorting Algorithms
@@ -93,8 +107,13 @@ int main()
     //     NOTE 1: Writing a lambda is easiest.
     //     NOTE 2: The less than function's arguments' type should be
     //       employee const&.
-    #error write code here
-
+    //#error write code here
+    stable_sort(employees_copy.begin(), employees_copy.end(), 
+                [](employee const& e1, employee const& e2)
+                {
+                  e1.name < e2.name;
+                }
+              );
     // output data...
     cout << "      BY_NAME: " << employees_copy << endl;
   }
@@ -107,10 +126,10 @@ int main()
   //   ARG 2: the "end" iterator of employees
   //   ARG 3: a predicate function/lambda/function object that defines
   //     the less than of two employees as: e1.salary < e2.salary
-  #error write code here
+  //#error write code here
 
   // output data...
-  cout << "    BY_SALARY: " << employees << endl;
+  //  ---> cout << "    BY_SALARY: " << employees << endl;
 
   // The boss wants to give a 2% pay raise to employees whose salary is 
   // between $20,000 and $30,000! Follow the instructions in the comments
@@ -142,7 +161,7 @@ int main()
   //     but, clearly, auto is much simpler.
   //   * Read more about find_if() in the Josuttis text and/or 
   //     cppreference.com.
-  #error write code here
+  //#error write code here
 
   // Now that you have the half-open range [low_end,upper_end)
   // you can increase all employees' salaries in that range!
@@ -156,10 +175,10 @@ int main()
   //     you can access an employee struct's salary member
   //     with i->salary. Thus, in a single line of code, use the *= 
   //     operator to increase the employee's salary by 2%.
-  #error write code here
+  //#error write code here
 
   // output data...
-  cout << "SALARY_ADJUST: " << employees << endl;
+  //  ---> cout << "SALARY_ADJUST: " << employees << endl;
 
   // Finally, know you can use <algorithm>s, etc. where the
   // "beginning" and "end" iterators are not the container's
@@ -172,9 +191,9 @@ int main()
   //
   // See the Josuttis text and/or cppreference.com for the
   // definition of reverse. (Use the two argument version.)
-  #error write code here
+  //#error write code here
 
   // output data...
-  cout << "AFTER_REVERSE: " << employees << endl;
+  //  ---> cout << "AFTER_REVERSE: " << employees << endl;
 }
 
