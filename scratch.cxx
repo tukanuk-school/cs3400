@@ -1,7 +1,6 @@
 /* C++ Program - Read a File */
 		
 #include<iostream>
-#include<conio>
 #include<stdlib.h>
 #include<stdio.h>
 #include<fstream>
