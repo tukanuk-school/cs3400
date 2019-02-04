@@ -1,33 +1,27 @@
-#include <iostream>
-
-using namespace std;
-
-int main()
-{ 
-    bool is_within_double_quotes = false;
-
-    char byte; 
-    while (cin >> noskipws >> byte)
-    {
-        if ( byte == '\"')  // quotation mark
-        {
-            is_within_double_quotes = !is_within_double_quotes;
-        }
-        
-        if (!is_within_double_quotes)
-        {
-            if ( byte == '.' || // period
-                 byte == ',' || // comma
-                 byte == '?' || // question mark
-                 byte == '-' || // dash
-                 byte == '\''   // single quote 
-               )
-            {
-                byte = ' ';
-            } 
-
-        } 
-        
-        cout << byte;
-    }
+/* C++ Program - Read a File */
+		
+#include<iostream>
+#include<stdlib.h>
+#include<stdio.h>
+#include<fstream>
+void main()
+{
+	clrscr();
+	char c[1000];
+	ifstream ifile;
+	ifile.open("filename.txt") ;
+	if(!ifile)
+	{
+		cout<<"Error in opening file..!!";
+		getch();
+		exit(1);
+	}
+	cout<<"Data in file = ";
+	while(ifile.eof()==0)
+	{
+		ifile>>c;
+		cout<<c<<" ";
+	}
+	ifile.close();
+	getch();
 }
