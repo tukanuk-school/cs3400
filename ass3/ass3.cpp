@@ -8,14 +8,6 @@
 // #include <boost/filesystem.hpp>
 #include <filesystem>
 
-using all_inputs_type = std::vector<std::shared_ptr<program_input> >;
-
-std::vector<bool> read_all_inputs(all_inputs_type& /*ai*/)
-{
-    return {}; // return a default constructed std::vector<bool>
-}
-
-
 class program_input
 {
     public: 
@@ -23,11 +15,20 @@ class program_input
         virtual bool read() = 0;
 };
 
+using all_inputs_type = std::vector<std::shared_ptr<program_input> >;
+
+std::vector<bool> read_all_inputs(all_inputs_type& /*ai*/)
+{
+    return {}; // return a default constructed std::vector<bool>
+}
+
 std::ostream& output_usage(std::ostream& os, int argc, char *argv[])
 {
     os << "Usage: " << argv[0] << " -d <directory>\n";
     return os;
 }
+
+
 
 int main (int argc, char *argv[]) 
 {
