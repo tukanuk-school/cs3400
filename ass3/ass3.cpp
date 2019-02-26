@@ -19,14 +19,26 @@ class program_input
 class yob_baby_name_file : program_input
 {
     public: 
-        yob_baby_name_file(std::string fname, unsigned year){}
-        ~yob_baby_name_file();
+        ~yob_baby_name_file();                                  // destructor 
+        yob_baby_name_file(std::string fname, unsigned year){}  // constructor
 
+    // data variables
     private:
-        private std::string _fname;
-        private unsigned year_;
+        std::string fname_;
+        unsigned year_;
 
+    // constructor
+    yob_baby_name_file::yob_baby_name_file(std::string fname, unsigned year)
+    {
+        fname_ = fname;
+        year_ = year;
+    }
 
+    // member functions
+    bool read()
+    {
+
+    }
 
 
 };
