@@ -3,16 +3,32 @@
 #include <memory>
 #include <string>
 #include <cstring>
-#include <optional>
+// #include <optional>
+#include <boost/optional.hpp>
 #include <iostream>
-// #include <boost/filesystem.hpp>
-#include <filesystem>
+#include <boost/filesystem.hpp>
+// #include <filesystem>
 
 class program_input
 {
     public: 
         virtual ~program_input() {} // necessary to properly deallocate memory
         virtual bool read() = 0;
+};
+
+class yob_baby_name_file : program_input
+{
+    public: 
+        yob_baby_name_file(std::string fname, unsigned year){}
+        ~yob_baby_name_file();
+
+    private:
+        private std::string _fname;
+        private unsigned year_;
+
+
+
+
 };
 
 using all_inputs_type = std::vector<std::shared_ptr<program_input> >;
@@ -32,8 +48,8 @@ std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
 
 int main (int argc, char *argv[]) 
 {
-    // namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
-    namespace fs = std::filesystem;
+    namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
+    // namespace fs = std::filesystem;
     using namespace std;
 
     if (argc == 1)
@@ -42,7 +58,8 @@ int main (int argc, char *argv[])
         return 1;
     }
 
-    optional<string> scan_directory;
+    boost::optional<string> scan_directory;
+    // optional<string> scan_directory;
 
     for (int args_pos = 1 ; args_pos < argc ; ++args_pos)
     {
@@ -62,15 +79,26 @@ int main (int argc, char *argv[])
         {
             output_usage(cerr, argc, argv) << "\tNOTE: Invalid argrument(s) provided.\n";
         }
-
-        all_inputs_type all_inputs; // hold all discovered program input files 
-
-        for (auto& entry : fs::recursive_directory_iterator(scan_directory.value()))
-        {
-            cout << "DEBUG: discovered: " << entry.path() << '\n';
-        }
-        read_all_inputs(all_inputs);
     }
+    
+    all_inputs_type all_inputs; // hold all discovered program input files 
+
+    for (auto& entry : fs::recursive_directory_iterator(scan_directory.value()))
+    {
+        // cout << "DEBUG: discovered: " << entry.path() << '\n';
+        if (!fs::is_regular_file(entry))
+            continue;
+
+        static regex const baby_name_file_regex( R"(yob(\d{4}).txt)" );
+
+        smatch mr;
+        string const fname = entry.path().filename();
+        if (regex_match(fname, mr, baby_name_file_regex))
+        {
+            cout << "DEBUG: Match found: " << fname << '\n';
+        }
+    }
+    read_all_inputs(all_inputs);
 }
 
 
