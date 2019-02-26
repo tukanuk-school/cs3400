@@ -18,20 +18,26 @@ class program_input
         virtual bool read() = 0;
 };
 
-class yob_baby_name_file : public program_input
-{
-    public: 
-    // member functions
-    bool read()
-
-    }
-
-
-
 using all_inputs_type = std::vector<std::shared_ptr<program_input> >;
 
-std::vector<bool> read_all_inputs(all_inputs_type& /*ai*/)
-    return {}; // return a default constructed std::vector<bool>
+std::vector<bool> read_all_inputs(all_inputs_type& ai)
+{
+    std::vector<bool> retval;
+    retval.reserve(ai.size() );
+
+    for(auto&& element : ai)
+    {
+        try
+        {
+            retval.push_back(element->read());
+        }
+        catch(const std::exception& e)
+        {
+            retval.push_back(false);
+        }   
+    }
+
+    return std::move(retval);
 }
 
 std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
@@ -40,7 +46,29 @@ std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
     return os;
 }
 
+class yob_baby_name_file : public program_input
+{
+    private:
+        std::string fname_;
+        unsigned year_;
 
+    public: 
+        bool read() override
+        {
+            std::cout << "Reading yob_baby_name_file " << fname_ << " for year " 
+                 << year_ << '\n';
+            
+            return true;
+        }
+
+        yob_baby_name_file(std::string fname, unsigned year){
+            fname_ = fname;
+            year_ = year;
+        }  // constructor 
+        // ~yob_baby_name_file();                                  // destructor
+
+
+};
 
 int main (int argc, char *argv[]) 
 {
@@ -81,17 +109,20 @@ int main (int argc, char *argv[])
 
     for (auto& entry : fs::recursive_directory_iterator(scan_directory.value()))
     {
-        cout << "DEBUG: discovered: " << entry.path() << '\n';
+        // cout << "DEBUG: directory discovered: " << entry.path() << '\n';
         if (!fs::is_regular_file(entry))
             continue;
 
         static regex const baby_name_file_regex( R"(yob(\d{4}).txt)" );
 
         smatch mr;
-        string const fname = entry.path().filename().string(); // added .string() "no viable conversion..."
+        string const fname = entry.path().filename().string();
         if (regex_match(fname, mr, baby_name_file_regex))
         {
-            cout << "DEBUG: Match found: " << fname << '\n';
+            // cout << "DEBUG: Match found: " << fname << '\n';
+
+            all_inputs.push_back(make_shared<yob_baby_name_file>(fname, stoul(mr[1].str()) ) );
+
         }
     }
     read_all_inputs(all_inputs);
