@@ -5,8 +5,8 @@
 #include <cstring>
 #include <optional>
 #include <iostream>
-#include <boost/filesystem.hpp>
-// #include <filesystem>
+// #include <boost/filesystem.hpp>
+#include <filesystem>
 
 using all_inputs_type = std::vector<std::shared_ptr<program_input> >;
 
@@ -31,8 +31,8 @@ std::ostream& output_usage(std::ostream& os, int argc, char *argv[])
 
 int main (int argc, char *argv[]) 
 {
-    namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
-    // namespace fs = std::filesystem;
+    // namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
+    namespace fs = std::filesystem;
     using namespace std;
 
     if (argc == 1)
