@@ -3,11 +3,13 @@
 #include <memory>
 #include <string>
 #include <cstring>
-// #include <optional>
-#include <boost/optional.hpp>
 #include <iostream>
-#include <boost/filesystem.hpp>
-// #include <filesystem>
+
+// includes depending on available libraries 
+#include <optional>
+#include <filesystem>
+// #include <boost/optional.hpp>
+// #include <boost/filesystem.hpp>
 
 class program_input
 {
@@ -16,15 +18,24 @@ class program_input
         virtual bool read() = 0;
 };
 
-class yob_baby_name_file : program_input
+class yob_baby_name_file : public program_input
 {
     public: 
-        yob_baby_name_file(std::string fname, unsigned year){}
-        ~yob_baby_name_file();
+        yob_baby_name_file(std::string fname, unsigned year){}  // constructor 
+        ~yob_baby_name_file();                                  // destructor
+
+        bool read() override
+        {
+            std::cout << "Reading yob_baby_name_file " << fname_ << " for year " 
+                 << year_ << '\n';
+            
+            return true;
+        }
 
     private:
-        private std::string _fname;
-        private unsigned year_;
+        std::string fname_;
+        unsigned year_;
+
 
 
 
@@ -48,8 +59,8 @@ std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
 
 int main (int argc, char *argv[]) 
 {
-    namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
-    // namespace fs = std::filesystem;
+    // namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
+    namespace fs = std::filesystem;
     using namespace std;
 
     if (argc == 1)
