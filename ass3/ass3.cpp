@@ -6,10 +6,10 @@
 #include <iostream>
 
 // includes depending on available libraries 
-#include <optional>
-#include <filesystem>
-// #include <boost/optional.hpp>
-// #include <boost/filesystem.hpp>
+// #include <optional>
+// #include <filesystem>
+#include <boost/optional.hpp>
+#include <boost/filesystem.hpp>
 
 class program_input
 {
@@ -59,8 +59,8 @@ std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
 
 int main (int argc, char *argv[]) 
 {
-    // namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
-    namespace fs = std::filesystem;
+    namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
+    // namespace fs = std::filesystem;
     using namespace std;
 
     if (argc == 1)
@@ -96,14 +96,14 @@ int main (int argc, char *argv[])
 
     for (auto& entry : fs::recursive_directory_iterator(scan_directory.value()))
     {
-        // cout << "DEBUG: discovered: " << entry.path() << '\n';
+        cout << "DEBUG: discovered: " << entry.path() << '\n';
         if (!fs::is_regular_file(entry))
             continue;
 
         static regex const baby_name_file_regex( R"(yob(\d{4}).txt)" );
 
         smatch mr;
-        string const fname = entry.path().filename();
+        string const fname = entry.path().filename().string(); // added .string() "no viable conversion..."
         if (regex_match(fname, mr, baby_name_file_regex))
         {
             cout << "DEBUG: Match found: " << fname << '\n';
