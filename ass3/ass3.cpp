@@ -22,7 +22,7 @@ std::vector<bool> read_all_inputs(all_inputs_type& /*ai*/)
     return {}; // return a default constructed std::vector<bool>
 }
 
-std::ostream& output_usage(std::ostream& os, int argc, char *argv[])
+std::ostream& output_usage(std::ostream& os, int /*argc*/, char *argv[])
 {
     os << "Usage: " << argv[0] << " -d <directory>\n";
     return os;
