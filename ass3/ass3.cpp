@@ -6,10 +6,10 @@
 #include <iostream>
 
 // includes depending on available libraries 
-// #include <optional>
-// #include <filesystem>
-#include <boost/optional.hpp>
-#include <boost/filesystem.hpp>
+#include <optional>
+#include <filesystem>
+// #include <boost/optional.hpp>
+// #include <boost/filesystem.hpp>
 
 class program_input
 {
@@ -62,9 +62,9 @@ class yob_baby_name_file : public program_input
         }
 
         yob_baby_name_file(std::string fname, unsigned year){
-            fname_ = fname;
-            year_ = year;
-        }  // constructor 
+		fname_ = fname;
+		year_ = year;
+	}  // constructor 
         // ~yob_baby_name_file();                                  // destructor
 
 
@@ -72,8 +72,8 @@ class yob_baby_name_file : public program_input
 
 int main (int argc, char *argv[]) 
 {
-    namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
-    // namespace fs = std::filesystem;
+    // namespace fs = boost::filesystem; // using boost library on macos rather than adjust complier version
+    namespace fs = std::filesystem;
     using namespace std;
 
     if (argc == 1)
@@ -82,8 +82,8 @@ int main (int argc, char *argv[])
         return 1;
     }
 
-    boost::optional<string> scan_directory;
-    // optional<string> scan_directory;
+    //boost::optional<string> scan_directory;
+    optional<string> scan_directory;
 
     for (int args_pos = 1 ; args_pos < argc ; ++args_pos)
     {
