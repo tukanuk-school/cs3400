@@ -61,13 +61,10 @@ class yob_baby_name_file : public program_input
             return true;
         }
 
-        yob_baby_name_file(std::string fname, unsigned year){
-		fname_ = fname;
-		year_ = year;
-	}  // constructor 
-        // ~yob_baby_name_file();                                  // destructor
-
-
+        yob_baby_name_file(std::string fname, unsigned year) :
+            fname_(fname),
+            year_(year) 
+            {} 
 };
 
 int main (int argc, char *argv[]) 
