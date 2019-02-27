@@ -64,15 +64,11 @@ class yob_baby_name_file : public program_input
         yob_baby_name_file(std::string fname, unsigned year) :
             fname_(fname),
             year_(year) 
-<<<<<<< HEAD
             {}
             // constructor 
             
 
 
-=======
-            {} 
->>>>>>> 4f9587af7990cd2f84c983bbad037b67f1ff01ad
 };
 
 int main (int argc, char *argv[]) 
